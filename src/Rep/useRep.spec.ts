@@ -4,20 +4,8 @@ import {Clock} from "./Clock.ts";
 import {SavedSession, SessionStore} from "./SessionStore.ts";
 
 describe('The Rep hook', () => {
-    let subject: RenderHookResult<RepViewModel, object>;
-    let clock: Clock;
-    let store: SessionStore;
-    const times = {
-        now: new Date("2023-01-05T05:00:00Z"),
-        later: new Date("2023-01-05T07:00:00Z"),
-        olden: new Date("2003-01-05T01:00:00Z"),
-        good: new Date("2012-11-05T12:00:00Z"),
-
-    }
-    const oldSession = {count: 18, start: times.olden, end: times.good};
-
     beforeEach(() => {
-        clock = Clock.createNull({nows: [times.now, times.later]});
+        clock = Clock.createNull({nowValues: [times.now, times.later]});
         store = SessionStore.createNull({"other_data": "{}", "rep_sessions": JSON.stringify([oldSession])})
         subject = renderHook(() => {
             return useRep(clock, store);
@@ -64,9 +52,7 @@ describe('The Rep hook', () => {
 
         describe('and then resetting', () => {
             beforeEach(() => {
-                act((): void => {
-                    model(subject).reset()
-                })
+                reset()
             });
 
             itResets();
@@ -74,9 +60,7 @@ describe('The Rep hook', () => {
 
         describe('and then saving', () => {
             beforeEach(() => {
-                act((): void => {
-                    model(subject).save()
-                })
+                save()
             });
 
             it('saves to the store', () => {
@@ -88,15 +72,35 @@ describe('The Rep hook', () => {
         });
 
     });
+    
     describe('when saving before repping', () => {
-        it.skip('does not save to the store', () => {
-            expect.fail()
+        it('does not save to the store', () => {
+            act((): void => { model(subject).save() })
+            expect(store.read()).toEqual([oldSession])
         });
     });
 
-    function rep() {
+    let subject: RenderHookResult<RepViewModel, object>;
+    let clock: Clock;
+    let store: SessionStore;
+    const times = {
+        now: new Date("2023-01-05T05:00:00Z"),
+        later: new Date("2023-01-05T07:00:00Z"),
+        olden: new Date("2003-01-05T01:00:00Z"),
+        good: new Date("2012-11-05T12:00:00Z"),
+    }
+    const oldSession = {count: 18, start: times.olden, end: times.good};
+
+    const rep = () => { action('rep') };
+    const save = () => { action('save') };
+    const reset = () => { action('reset') };
+
+    function action(name: keyof RepViewModel) {
         act((): void => {
-            model(subject).rep()
+            const method = model(subject)[name];
+            if (typeof method === 'function') {
+                method();
+            }
         })
     }
 
