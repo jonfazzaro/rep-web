@@ -3,12 +3,9 @@ import {RepViewModel, useRep} from "./useRep.ts";
 
 describe('The Rep hook', () => {
     let subject: RenderHookResult<RepViewModel, object>;
+    
     beforeEach(() => {
         subject = renderHook(() => useRep())
-    });
-
-    it('is a hook', () => {
-        expect(subject.result.current).toBeDefined()
     });
 
     it('has a count', () => {
@@ -20,8 +17,8 @@ describe('The Rep hook', () => {
         expect(subject.result.current.end).toEqual(null)
     });
 
-    it.skip('has a \'has started\' flag', () => {
-        expect.fail()
+    it("has a 'has started' flag", () => {
+        expect(subject.result.current.hasStarted).toEqual(false)
     });
 
     describe('when repping', () => {
