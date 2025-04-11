@@ -1,29 +1,30 @@
-import {renderHook, RenderHookResult} from "@testing-library/react";
+import {act, renderHook, RenderHookResult} from "@testing-library/react";
 import {RepViewModel, useRep} from "./useRep.ts";
 
 describe('The Rep hook', () => {
     let subject: RenderHookResult<RepViewModel, object>;
-    
+
     beforeEach(() => {
         subject = renderHook(() => useRep())
     });
 
     it('has a count', () => {
-        expect(subject.result.current.count).toEqual(0)
+        expect(model(subject).count).toEqual(0)
     });
 
     it('has a start and end time', () => {
-        expect(subject.result.current.start).toEqual(null)
-        expect(subject.result.current.end).toEqual(null)
+        expect(model(subject).start).toEqual(null)
+        expect(model(subject).end).toEqual(null)
     });
 
     it("has a 'has started' flag", () => {
-        expect(subject.result.current.hasStarted).toEqual(false)
+        expect(model(subject).hasStarted).toEqual(false)
     });
 
     describe('when repping', () => {
-        it.skip('increments the count', () => {
-            expect.fail()
+        it('increments the count', () => {
+            rep();
+            expect(model(subject).count).toEqual(1)
         });
 
         it.skip('sets the start time given it\'s the first time', () => {
@@ -56,4 +57,14 @@ describe('The Rep hook', () => {
             expect.fail()
         });
     });
+
+    function rep() {
+        act((): void => {
+            model(subject).rep()
+        })
+    }
+
+    function model(subject: RenderHookResult<RepViewModel, object>) {
+        return subject.result.current;
+    }
 });
