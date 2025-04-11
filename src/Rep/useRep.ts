@@ -6,6 +6,7 @@ export interface RepViewModel {
     start: null;
     end: null;
     rep(): void;
+    reset(): void;
 }
 
 export function useRep() : RepViewModel {
@@ -14,9 +15,16 @@ export function useRep() : RepViewModel {
         count,
         start: null,
         end: null,
-        hasStarted: false,
-        rep: () => {
-            setCount(count => count + 1);
-        }
+        hasStarted: 0 < count,
+        rep,
+        reset
+    }
+
+    function reset() {
+        return setCount(0);
+    }
+
+    function rep() {
+        setCount(count => count + 1);
     }
 }

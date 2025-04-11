@@ -3,6 +3,7 @@ import {RepViewModel, useRep} from "./useRep.ts";
 
 describe('The Rep hook', () => {
     let subject: RenderHookResult<RepViewModel, object>;
+    const _now = Date.now();
 
     beforeEach(() => {
         subject = renderHook(() => useRep())
@@ -17,27 +18,41 @@ describe('The Rep hook', () => {
         expect(model(subject).end).toEqual(null)
     });
 
-    it("has a 'has started' flag", () => {
+    it("has a started flag", () => {
         expect(model(subject).hasStarted).toEqual(false)
     });
 
     describe('when repping', () => {
+        beforeEach(() => {
+            rep()
+        });
+        
+        describe.skip("given it's the first time", () => {
+            it("sets the start time", () => {
+                expect(model(subject).start).toEqual(_now)
+            });
+        });
+
         it('increments the count', () => {
-            rep();
             expect(model(subject).count).toEqual(1)
         });
 
-        it.skip('sets the start time given it\'s the first time', () => {
-            expect.fail()
-        });
-
-        it.skip('sets the \'has started\' flag', () => {
-            expect.fail()
+        it("sets the started flag", () => {
+            expect(model(subject).hasStarted).toEqual(true)
         });
 
         describe('and then resetting', () => {
-            it.skip('resets everything', () => {
-                expect.fail()
+            beforeEach(() => {
+                act((): void => {
+                    model(subject).reset()
+                })
+            });
+
+            it('resets everything', () => {
+                expect(model(subject).count).toEqual(0)
+                expect(model(subject).start).toEqual(null)
+                expect(model(subject).end).toEqual(null)
+                expect(model(subject).hasStarted).toEqual(false)
             });
 
             describe('and then saving', () => {
