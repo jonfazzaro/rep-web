@@ -8,24 +8,32 @@ export interface RepViewModel {
     end: null;
     rep(): void;
     reset(): void;
+    save(): void;
 }
 
 export function useRep(clock: Clock) : RepViewModel {
     const [count, setCount] = useState(0);
     const [start, setStart] = useState<Date | null>(null);
+    const [end, setEnd] = useState<Date | null>(null);
+
+    function save() {
+        setEnd(clock.now())
+    }
 
     return <RepViewModel>{
         count,
         start,
-        end: null,
+        end,
         hasStarted: hasStarted(),
         rep,
-        reset
+        reset,
+        save
     }
 
     function reset() {
         setCount(0);
         setStart(null);
+        setEnd(null);
     }
 
     function rep() {

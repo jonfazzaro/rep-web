@@ -56,9 +56,7 @@ describe('The Rep hook', () => {
 
         describe('and then resetting', () => {
             beforeEach(() => {
-                act((): void => {
-                    model(subject).reset()
-                })
+                act((): void => { model(subject).reset() })
             });
 
             it('resets everything', () => {
@@ -67,15 +65,23 @@ describe('The Rep hook', () => {
                 expect(model(subject).start).toEqual(null)
                 expect(model(subject).end).toEqual(null)
             });
+        });
+            
+        describe('and then saving', () => {
+            beforeEach(() => {
+                act((): void => { model(subject).save() })
+            });
 
-            describe('and then saving', () => {
-                it.skip('saves to the store', () => {
-                    expect.fail()
-                });
+            it('sets the end time', () => {
+                expect(model(subject).end).toEqual(times.later)
+            });
 
-                it.skip('resets everything', () => {
-                    expect.fail()
-                });
+            it.skip('saves to the store', () => {
+                expect.fail()
+            });
+
+            it.skip('resets everything', () => {
+                expect.fail()
             });
         });
     });
@@ -87,9 +93,7 @@ describe('The Rep hook', () => {
     });
 
     function rep() {
-        act((): void => {
-            model(subject).rep()
-        })
+        act((): void => { model(subject).rep() })
     }
 
     function model(subject: RenderHookResult<RepViewModel, object>) {
