@@ -1,5 +1,13 @@
+import {renderHook} from "@testing-library/react";
+import {useRep} from "./useRep.ts";
+
 describe('The Rep hook', () => {
-    it('is a view model', () => {
+    it('exists', () => {
+        const subject = renderHook(() => useRep())
+        expect(subject.result.current).toBeDefined()
+    });
+
+    it.skip('is a view model', () => {
         expect.fail()
     });
 
