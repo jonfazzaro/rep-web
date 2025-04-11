@@ -10,7 +10,7 @@ describe('The Clock', () => {
     describe('when null', () => {
         it('returns the given time', () => {
             const now = [new Date("2022-01-01")]
-            const clock = Clock.createNull({now})
+            const clock = Clock.createNull({nows: now})
             expect(clock.now()).toEqual(now[0])
         });
 
@@ -18,7 +18,7 @@ describe('The Clock', () => {
             let clock: Clock;
             const times = [new Date("2022-01-01"), new Date("2022-01-02")]
             beforeEach(() => {
-                clock = Clock.createNull({now: times})
+                clock = Clock.createNull({nows: times})
             });
 
             describe('when called a second time', () => {

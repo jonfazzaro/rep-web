@@ -13,12 +13,12 @@ export interface RepViewModel {
 export function useRep(clock: Clock) : RepViewModel {
     const [count, setCount] = useState(0);
     const [start, setStart] = useState<Date | null>(null);
-    
+
     return <RepViewModel>{
         count,
         start,
         end: null,
-        hasStarted: 0 < count,
+        hasStarted: hasStarted(),
         rep,
         reset
     }
@@ -29,7 +29,12 @@ export function useRep(clock: Clock) : RepViewModel {
     }
 
     function rep() {
+        if (!hasStarted())
+            setStart(clock.now());
         setCount(count => count + 1);
-        setStart(clock.now());
+    }
+
+    function hasStarted() {
+        return 0 < count;
     }
 }
