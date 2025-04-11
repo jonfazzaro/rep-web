@@ -41,6 +41,7 @@ export function useRep(clock: Clock, store: SessionStore) : RepViewModel {
 
     function save() {
         store.save({ count, start, end: clock.now() })
+        reset();
     }
 
     function hasStarted() {

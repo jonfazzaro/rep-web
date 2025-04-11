@@ -37,6 +37,7 @@ describe('The Rep hook', () => {
         expect(model(subject).hasStarted).toEqual(false)
     });
 
+
     describe('when repping', () => {
         beforeEach(() => {
             rep()
@@ -68,12 +69,7 @@ describe('The Rep hook', () => {
                 })
             });
 
-            it('resets everything', () => {
-                expect(model(subject).count).toEqual(0)
-                expect(model(subject).hasStarted).toEqual(false)
-                expect(model(subject).start).toEqual(null)
-                expect(model(subject).end).toEqual(null)
-            });
+            itResets();
         });
 
         describe('and then saving', () => {
@@ -88,12 +84,10 @@ describe('The Rep hook', () => {
                 expect(store.read()).toEqual([oldSession, expected])
             });
 
-            it.skip('resets everything', () => {
-                expect.fail()
-            });
+            itResets();
         });
-    });
 
+    });
     describe('when saving before repping', () => {
         it.skip('does not save to the store', () => {
             expect.fail()
@@ -108,5 +102,14 @@ describe('The Rep hook', () => {
 
     function model(subject: RenderHookResult<RepViewModel, object>) {
         return subject.result.current;
+    }
+
+    function itResets() {
+        it('resets everything', () => {
+            expect(model(subject).count).toEqual(0)
+            expect(model(subject).hasStarted).toEqual(false)
+            expect(model(subject).start).toEqual(null)
+            expect(model(subject).end).toEqual(null)
+        });
     }
 });
