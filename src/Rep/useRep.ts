@@ -1,5 +1,13 @@
-export function useRep() {
-    return {
-        count: 0
+export interface RepViewModel {
+    count: number;
+    start: null;
+    end: null;
+}
+
+export function useRep() : RepViewModel {
+    return <RepViewModel>{
+        count: 0,
+        start: null,
+        end: null,
     }
 }

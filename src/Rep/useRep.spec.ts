@@ -1,20 +1,23 @@
-import {renderHook} from "@testing-library/react";
-import {useRep} from "./useRep.ts";
+import {renderHook, RenderHookResult} from "@testing-library/react";
+import {RepViewModel, useRep} from "./useRep.ts";
 
 describe('The Rep hook', () => {
+    let subject: RenderHookResult<RepViewModel, object>;
+    beforeEach(() => {
+        subject = renderHook(() => useRep())
+    });
 
     it('is a hook', () => {
-        const subject = renderHook(() => useRep())
         expect(subject.result.current).toBeDefined()
     });
 
     it('has a count', () => {
-        const subject = renderHook(() => useRep())
         expect(subject.result.current.count).toEqual(0)
     });
 
-    it.skip('has a start and end time', () => {
-        expect.fail()
+    it('has a start and end time', () => {
+        expect(subject.result.current.start).toEqual(null)
+        expect(subject.result.current.end).toEqual(null)
     });
 
     it.skip('has a \'has started\' flag', () => {
