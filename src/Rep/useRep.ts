@@ -16,10 +16,6 @@ export function useRep(clock: Clock) : RepViewModel {
     const [start, setStart] = useState<Date | null>(null);
     const [end, setEnd] = useState<Date | null>(null);
 
-    function save() {
-        setEnd(clock.now())
-    }
-
     return <RepViewModel>{
         count,
         start,
@@ -30,16 +26,20 @@ export function useRep(clock: Clock) : RepViewModel {
         save
     }
 
+    function rep() {
+        if (!hasStarted())
+            setStart(clock.now());
+        setCount(count => count + 1);
+    }
+
     function reset() {
         setCount(0);
         setStart(null);
         setEnd(null);
     }
 
-    function rep() {
-        if (!hasStarted())
-            setStart(clock.now());
-        setCount(count => count + 1);
+    function save() {
+        setEnd(clock.now())
     }
 
     function hasStarted() {
