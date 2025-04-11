@@ -30,12 +30,14 @@ export interface NullDateValues {
 
 class NullDate implements DateProvider {
     private values: NullDateValues;
+    private callCount: number;
 
     constructor(values: NullDateValues) {
         this.values = values
+        this.callCount = 0
     }
 
     now() {
-        return this.values.now[0]
+        return this.values.now[this.callCount++]
     }
 }

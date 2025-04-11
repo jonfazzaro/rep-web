@@ -14,18 +14,28 @@ describe('The Clock', () => {
             expect(clock.now()).toEqual(now[0])
         });
 
-        // describe('given more than one date', () => {
-        //     let clock: Clock;
-        //     beforeEach(() => {
-        //         clock = Clock.createNull({now: [new Date("2022-01-01")]})
-        //     });
-        //     describe('when called a second time', () => {
-        //         it('returns the second value', () => {
-        //            
-        //         });
-        //     });
-        // });
-        
+        describe('given more than one date', () => {
+            let clock: Clock;
+            const times = [new Date("2022-01-01"), new Date("2022-01-02")]
+            beforeEach(() => {
+                clock = Clock.createNull({now: times})
+            });
+
+            describe('when called a second time', () => {
+                it('returns the second value', () => {
+                    clock.now()
+                    expect(clock.now()).toEqual(times[1])
+                });
+
+                describe('when called more times than values given', () => {
+                    it('returns undefined', () => {
+                        clock.now()
+                        clock.now()
+                        expect(clock.now()).not.toBeDefined()
+                    });
+                });
+            });
+        });
     });
 
 });
