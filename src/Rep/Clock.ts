@@ -25,7 +25,7 @@ class RealDate implements DateProvider {
 }
 
 export interface NullDateValues {
-    now: Date
+    now: Date[]
 }
 
 class NullDate implements DateProvider {
@@ -36,6 +36,6 @@ class NullDate implements DateProvider {
     }
 
     now() {
-        return this.values.now
+        return this.values.now[0]
     }
 }

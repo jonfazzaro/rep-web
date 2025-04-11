@@ -7,7 +7,7 @@ describe('The Rep hook', () => {
     const times: NullDateValues = {now: new Date()}
 
     beforeEach(() => {
-        subject = renderHook(() => useRep(Clock.createNull({now: times.now})))
+        subject = renderHook(() => useRep(Clock.createNull({now: [times.now]})))
     });
 
     it('has a count', () => {
@@ -31,6 +31,14 @@ describe('The Rep hook', () => {
         describe("given it's the first time", () => {
             it("sets the start time", () => {
                 expect(model(subject).start).toEqual(times.now)
+            });
+
+            describe('when repping a second time', () => {
+                it('does not change the start time', () => {
+                    rep()
+                    expect(model(subject).start).toEqual(times.now)
+                });
+
             });
         });
 
