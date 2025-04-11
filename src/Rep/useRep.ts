@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {Clock} from "./Clock.ts";
+import {SessionStore} from "./SessionStore.ts";
 
 export interface RepViewModel {
     hasStarted: boolean;
@@ -11,7 +12,7 @@ export interface RepViewModel {
     save(): void;
 }
 
-export function useRep(clock: Clock) : RepViewModel {
+export function useRep(clock: Clock, store: SessionStore) : RepViewModel {
     const [count, setCount] = useState(0);
     const [start, setStart] = useState<Date | null>(null);
     const [end, setEnd] = useState<Date | null>(null);
@@ -39,7 +40,7 @@ export function useRep(clock: Clock) : RepViewModel {
     }
 
     function save() {
-        setEnd(clock.now())
+        store.save({ count, start, end: clock.now() })
     }
 
     function hasStarted() {

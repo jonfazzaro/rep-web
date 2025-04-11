@@ -1,15 +1,12 @@
-import {Store} from "./Store.ts";
+import {SavedSession, SessionStore} from "./SessionStore.ts";
 
-describe('The Store', () => {
-    it('exists', () => {
-       expect(new Store()).toBeDefined() 
-    });
+describe('The Session Store', () => {
 
     it('saves and reads', () => {
-        const stuff = {a: 1, b: 2};
-        const things = {c: 3, d: 4};
-        const savingStore = new Store();
-        const readingStore = new Store();
+        const stuff:SavedSession = { count: 12, start: new Date(), end: new Date()}
+        const things:SavedSession = { count: 198, start: new Date(), end: new Date()}
+        const savingStore = new SessionStore();
+        const readingStore = new SessionStore();
 
         savingStore.save(stuff)
         savingStore.save(things)
