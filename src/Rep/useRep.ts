@@ -1,3 +1,5 @@
 export function useRep() {
-    return {}
+    return {
+        count: 0
+    }
 }

@@ -2,17 +2,15 @@ import {renderHook} from "@testing-library/react";
 import {useRep} from "./useRep.ts";
 
 describe('The Rep hook', () => {
-    it('exists', () => {
+
+    it('is a hook', () => {
         const subject = renderHook(() => useRep())
         expect(subject.result.current).toBeDefined()
     });
 
-    it.skip('is a view model', () => {
-        expect.fail()
-    });
-
-    it.skip('has a count', () => {
-        expect.fail()
+    it('has a count', () => {
+        const subject = renderHook(() => useRep())
+        expect(subject.result.current.count).toEqual(0)
     });
 
     it.skip('has a start and end time', () => {
