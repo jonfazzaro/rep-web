@@ -1,6 +1,6 @@
 import {useState} from "react";
-import {Clock} from "./Clock.ts";
-import {SessionStore} from "./SessionStore.ts";
+import {Clock} from "../edge/Clock.ts";
+import {SessionStore} from "../edge/SessionStore.ts";
 
 export interface RepViewModel {
     hasStarted: boolean;
@@ -12,7 +12,7 @@ export interface RepViewModel {
     save(): void;
 }
 
-export function useRep(clock: Clock, store: SessionStore) : RepViewModel {
+export function useRep(clock: Clock = new Clock(), store: SessionStore = new SessionStore()) : RepViewModel {
     const [count, setCount] = useState(0);
     const [start, setStart] = useState<Date | null>(null);
     const [end, setEnd] = useState<Date | null>(null);
