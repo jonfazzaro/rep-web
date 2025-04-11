@@ -1,12 +1,13 @@
 import {act, renderHook, RenderHookResult} from "@testing-library/react";
 import {RepViewModel, useRep} from "./useRep.ts";
+import {Clock, NullDateValues} from "./Clock.ts";
 
 describe('The Rep hook', () => {
     let subject: RenderHookResult<RepViewModel, object>;
-    const _now = Date.now();
+    const times: NullDateValues = {now: new Date()}
 
     beforeEach(() => {
-        subject = renderHook(() => useRep())
+        subject = renderHook(() => useRep(Clock.createNull({now: times.now})))
     });
 
     it('has a count', () => {
@@ -26,10 +27,10 @@ describe('The Rep hook', () => {
         beforeEach(() => {
             rep()
         });
-        
-        describe.skip("given it's the first time", () => {
+
+        describe("given it's the first time", () => {
             it("sets the start time", () => {
-                expect(model(subject).start).toEqual(_now)
+                expect(model(subject).start).toEqual(times.now)
             });
         });
 
@@ -50,9 +51,9 @@ describe('The Rep hook', () => {
 
             it('resets everything', () => {
                 expect(model(subject).count).toEqual(0)
+                expect(model(subject).hasStarted).toEqual(false)
                 expect(model(subject).start).toEqual(null)
                 expect(model(subject).end).toEqual(null)
-                expect(model(subject).hasStarted).toEqual(false)
             });
 
             describe('and then saving', () => {

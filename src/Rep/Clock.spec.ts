@@ -13,6 +13,8 @@ describe('The Clock', () => {
             const clock = Clock.createNull({now})
             expect(clock.now()).toEqual(now)
         });
+        
+        
     });
 
 });

@@ -1,8 +1,8 @@
 export class Clock {
-    private date: DateWrapper;
+    private date: DateProvider;
 
-    constructor(dateWrapper: DateWrapper = new RealDate()) {
-        this.date = dateWrapper
+    constructor(date: DateProvider = new RealDate()) {
+        this.date = date
     }
 
     static createNull(values: NullDateValues) {
@@ -14,21 +14,21 @@ export class Clock {
     }
 }
 
-interface DateWrapper {
+interface DateProvider {
     now(): Date
 }
 
-class RealDate implements DateWrapper {
+class RealDate implements DateProvider {
     now() {
         return new Date()
     }
 }
 
-interface NullDateValues {
+export interface NullDateValues {
     now: Date
 }
 
-class NullDate implements DateWrapper {
+class NullDate implements DateProvider {
     private values: NullDateValues;
 
     constructor(values: NullDateValues) {
