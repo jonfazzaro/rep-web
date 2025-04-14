@@ -1,12 +1,11 @@
 import {act, renderHook, RenderHookResult} from "@testing-library/react";
 import {RepViewModel, useRep} from "./useRep.ts";
 import {Clock} from "../time/Clock.ts";
-import {SessionStore} from "../storage/SessionStore.ts";
-import {SavedSession} from "../storage/SavedSession.ts";
+import {SavedSession, SessionStore} from "../storage/SessionStore.ts";
 
 describe('The Rep hook', () => {
     beforeEach(() => {
-        clock = Clock.createNull({nowValues: [times.now, times.later]});
+        clock = Clock.createNull([times.now, times.later]);
         store = SessionStore.createNull({"other_data": "{}", "rep_sessions": JSON.stringify([oldSession])})
         subject = renderHook(() => {
             return useRep(clock, store);
@@ -25,7 +24,6 @@ describe('The Rep hook', () => {
     it("has a started flag", () => {
         expect(model(subject).hasStarted).toEqual(false)
     });
-
 
     describe('when repping', () => {
         beforeEach(() => {

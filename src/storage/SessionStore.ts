@@ -1,7 +1,12 @@
 import {dateReviver} from "../time/dates.ts";
-import {SavedSession} from "./SavedSession.ts";
 import {Storage} from "./Storage.ts";
 import {LocalStorage} from "./LocalStorage.ts";
+
+export interface SavedSession {
+    count: number;
+    start: Date | null;
+    end: Date | null;
+}
 
 export class SessionStore {
     private readonly _key = 'rep_sessions';

@@ -1,5 +1,4 @@
-import {SessionStore} from "./SessionStore.ts";
-import {SavedSession} from "./SavedSession.ts";
+import {SavedSession, SessionStore} from "./SessionStore.ts";
 
 describe('The Session Store', () => {
 

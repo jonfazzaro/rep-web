@@ -5,8 +5,8 @@ export class Clock {
         this.date = date
     }
 
-    static createNull(values: NullDateValues) {
-        return new Clock(new NullDate(values))
+    static createNull(nowValues: Date[] = []) {
+        return new Clock(new NullDate(nowValues))
     }
 
     now() {
@@ -24,20 +24,14 @@ class RealDate implements DateProvider {
     }
 }
 
-export interface NullDateValues {
-    nowValues: Date[]
-}
-
 class NullDate implements DateProvider {
-    private values: NullDateValues;
     private callCount: number;
 
-    constructor(values: NullDateValues) {
-        this.values = values
+    constructor(private nowValues: Date[] = []) {
         this.callCount = 0
     }
 
     now() {
-        return this.values.nowValues[this.callCount++]
+        return this.nowValues[this.callCount++]
     }
 }
