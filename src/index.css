@@ -54,10 +54,15 @@ button {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 85vh;
+    container: card / size;
     gap: var(--gap);
 
     .count {
         grid-column: span 2 / span 2;
-        font-size: 50cqmin;
+        font-size: 80cqmin;
+    }
+    
+    .save {
+        font-weight: bold;
     }
 }
