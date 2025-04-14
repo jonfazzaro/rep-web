@@ -1,7 +1,8 @@
 import {act, renderHook, RenderHookResult} from "@testing-library/react";
 import {RepViewModel, useRep} from "./useRep.ts";
 import {Clock} from "../time/Clock.ts";
-import {SavedSession, SessionStore} from "../storage/SessionStore.ts";
+import {SessionStore} from "../storage/SessionStore.ts";
+import {SavedSession} from "../storage/SavedSession.ts";
 
 describe('The Rep hook', () => {
     beforeEach(() => {

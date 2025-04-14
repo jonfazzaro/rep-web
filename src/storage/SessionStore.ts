@@ -1,4 +1,7 @@
 import {dateReviver} from "../time/dates.ts";
+import {SavedSession} from "./SavedSession.ts";
+import {Storage} from "./Storage.ts";
+import {LocalStorage} from "./LocalStorage.ts";
 
 export class SessionStore {
     private readonly _key = 'rep_sessions';
@@ -18,28 +21,6 @@ export class SessionStore {
 
     async read(): Promise<SavedSession[]> {
         return Promise.resolve(JSON.parse(this.storage.getItem(this._key) ?? "[]", dateReviver))
-    }
-}
-
-export interface SavedSession {
-    count: number;
-    start: Date | null;
-    end: Date | null;
-}
-
-interface Storage {
-    getItem(key: string): string | null;
-
-    setItem(key: string, value: string): void;
-}
-
-class LocalStorage implements Storage {
-    getItem(key: string): string | null {
-        return localStorage.getItem(key);
-    }
-
-    setItem(key: string, value: string): void {
-        localStorage.setItem(key, value);
     }
 }
 
