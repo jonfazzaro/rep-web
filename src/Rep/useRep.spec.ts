@@ -59,24 +59,24 @@ describe('The Rep hook', () => {
         });
 
         describe('and then saving', () => {
-            beforeEach(() => {
-                save()
+            beforeEach(async () => {
+                await save()
             });
 
-            it('saves to the store', () => {
+            it('saves to the store', async () => {
                 const expected: SavedSession = {count: 1, start: times.now, end: times.later}
-                expect(store.read()).toEqual([oldSession, expected])
+                expect(await store.read()).toEqual([oldSession, expected])
             });
 
             itResets();
         });
 
     });
-    
+
     describe('when saving before repping', () => {
-        it('does not save to the store', () => {
-            act((): void => { model(subject).save() })
-            expect(store.read()).toEqual([oldSession])
+        it('does not save to the store', async () => {
+            await save()
+            expect(await store.read()).toEqual([oldSession])
         });
     });
 
@@ -91,9 +91,14 @@ describe('The Rep hook', () => {
     }
     const oldSession = {count: 18, start: times.olden, end: times.good};
 
-    const rep = () => { action('rep') };
-    const save = () => { action('save') };
-    const reset = () => { action('reset') };
+    const rep = () => action('rep');
+    const reset = () => action('reset');
+
+    async function save() {
+        await act(async (): Promise<void> => {
+            model(subject).save()
+        })
+    }
 
     function action(name: keyof RepViewModel) {
         act((): void => {
@@ -116,4 +121,5 @@ describe('The Rep hook', () => {
             expect(model(subject).end).toEqual(null)
         });
     }
-});
+})
+;

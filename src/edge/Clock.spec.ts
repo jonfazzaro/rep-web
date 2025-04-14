@@ -4,7 +4,8 @@ import {expect} from "vitest";
 describe('The Clock', () => {
 
     it('tells the time', () => {
-        expect(new Clock().now()).toEqual(new Date())
+        expect(toTheMinute(new Clock().now()))
+            .toEqual(toTheMinute(new Date()))
     });
 
     describe('when null', () => {
@@ -38,4 +39,7 @@ describe('The Clock', () => {
         });
     });
 
+    function toTheMinute(date: Date) {
+        return date.toISOString().replace(/.\d+Z$/g, "Z");
+    }
 });

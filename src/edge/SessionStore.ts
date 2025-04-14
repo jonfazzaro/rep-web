@@ -1,3 +1,5 @@
+import {dateReviver} from "./dates.ts";
+
 export class SessionStore {
     private readonly _key = 'rep_sessions';
 
@@ -5,26 +7,17 @@ export class SessionStore {
         this.storage = storage;
     }
 
-    static createNull(seed:Record<string, string> = {}) {
+    static createNull(seed: Record<string, string> = {}) {
         return new SessionStore(new NullStorage(seed))
     }
 
-    save(session: SavedSession) {
-        const list = this.read();
+    async save(session: SavedSession) {
+        const list = await this.read();
         this.storage.setItem(this._key, JSON.stringify(list.concat(session)));
     }
 
-    read(): SavedSession[] {
-        return JSON.parse(this.storage.getItem(this._key) ?? "[]", dateReviver)
-
-        function dateReviver(_key: string, value: string) : Date | string {
-            return isDateString(value) ? new Date(value) : value;
-
-            function isDateString(value: string) {
-                const dateFormat = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
-                return typeof value === "string" && dateFormat.test(value)
-            }
-        }
+    async read(): Promise<SavedSession[]> {
+        return Promise.resolve(JSON.parse(this.storage.getItem(this._key) ?? "[]", dateReviver))
     }
 }
 
@@ -53,7 +46,7 @@ class LocalStorage implements Storage {
 class NullStorage implements Storage {
     private readonly data: Record<string, string>;
 
-    constructor(seed:Record<string, string> = {}) {
+    constructor(seed: Record<string, string> = {}) {
         this.data = seed
     }
 

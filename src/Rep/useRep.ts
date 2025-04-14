@@ -39,9 +39,9 @@ export function useRep(clock: Clock = new Clock(), store: SessionStore = new Ses
         setEnd(null);
     }
 
-    function save() {
+    async function save() {
         if (!hasStarted()) return
-        store.save({ count, start, end: clock.now() })
+        await store.save({ count, start, end: clock.now() })
         reset();
     }
 
