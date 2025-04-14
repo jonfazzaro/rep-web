@@ -1,6 +1,6 @@
 import {useState} from "react";
-import {Clock} from "../edge/Clock.ts";
-import {SessionStore} from "../edge/SessionStore.ts";
+import {Clock} from "../time/Clock.ts";
+import {SessionStore} from "../storage/SessionStore.ts";
 
 export interface RepViewModel {
     hasStarted: boolean;

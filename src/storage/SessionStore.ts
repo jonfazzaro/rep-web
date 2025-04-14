@@ -1,4 +1,4 @@
-import {dateReviver} from "./dates.ts";
+import {dateReviver} from "../time/dates.ts";
 
 export class SessionStore {
     private readonly _key = 'rep_sessions';
